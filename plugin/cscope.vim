@@ -13,22 +13,60 @@ endif
 
 set cscopequickfix=s-,g-,d-,c-,t-,e-,f-,i-
 " s: Find this C symbol
-map <leader>fs :call CscopeFind('s', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindSymbol :call CscopeFind('s', expand('<cword>'))<CR>
 " g: Find this definition
-map <leader>fg :call CscopeFind('g', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindDef :call CscopeFind('g', expand('<cword>'))<CR>
 " d: Find functions called by this function
-map <leader>fd :call CscopeFind('d', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindCallees :call CscopeFind('d', expand('<cword>'))<CR>
 " c: Find functions calling this function
-map <leader>fc :call CscopeFind('c', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindCallers :call CscopeFind('c', expand('<cword>'))<CR>
 " t: Find this text string
-map <leader>ft :call CscopeFind('t', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindString :call CscopeFind('t', expand('<cword>'))<CR>
 " e: Find this egrep pattern
-map <leader>fe :call CscopeFind('e', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindGrep :call CscopeFind('e', expand('<cword>'))<CR>
 " f: Find this file
-map <leader>ff :call CscopeFind('f', expand('<cword>'))<CR>
+noremap <silent> <plug>CscopeFindFile :call CscopeFind('f', expand('<cword>'))<CR>
 " i: Find files #including this file
-map <leader>fi :call CscopeFind('i', expand('<cword>'))<CR>
-map <leader>l :call ToggleLocationList()<CR>
+noremap <silent> <plug>CscopeFindIncluders :call CscopeFind('i', expand('<cword>'))<CR>
+" l: location list
+noremap <silent> <plug>CscopeToggleLocList :call ToggleLocationList()<CR>
+
+
+if !hasmapto('<plug>CscopeFindSymbol') && empty(maparg('<leader>fs', 'n'))
+  noremap <leader>fs <plug>CscopeFindSymbol
+endif
+
+if !hasmapto('<plug>CscopeFindDef') && empty(maparg('<leader>fg', 'n'))
+  noremap <leader>fg <plug>CscopeFindDef
+endif
+
+if !hasmapto('<plug>CscopeFindCallers') && empty(maparg('<leader>fc', 'n'))
+  noremap <leader>fc <plug>CscopeFindCallers
+endif
+
+if !hasmapto('<plug>CscopeFindCallees') && empty(maparg('<leader>fd', 'n'))
+  noremap <leader>fd <plug>CscopeFindCallees
+endif
+
+if !hasmapto('<plug>CscopeFindString') && empty(maparg('<leader>ft', 'n'))
+  noremap <leader>ft <plug>CscopeFindString
+endif
+
+if !hasmapto('<plug>CscopeFindGrep') && empty(maparg('<leader>fe', 'n'))
+  noremap <leader>fe <plug>CscopeFindGrep
+endif
+
+if !hasmapto('<plug>CscopeFindFile') && empty(maparg('<leader>ff', 'n'))
+  noremap <leader>ff <plug>CscopeFindFile
+endif
+
+if !hasmapto('<plug>CscopeFindIncluders') && empty(maparg('<leader>fi', 'n'))
+  noremap <leader>fi <plug>CscopeFindIncluders
+endif
+
+if !hasmapto('<plug>CscopeToggleLocList') && empty(maparg('<leader>l', 'n'))
+  noremap <leader>l <plug>CscopeToggleLocList
+endif
 
 com! -nargs=? -complete=dir CscopeGen call CreateCscopeDB("<args>")
 com! -nargs=0 CscopeList call <SID>ListDBs()
